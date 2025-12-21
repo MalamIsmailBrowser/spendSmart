@@ -1,0 +1,148 @@
+* { box-sizing: border-box; font-family: system-ui, sans-serif; }
+body { background: #f4f6f8; padding: 12px; transition: background 0.4s, color 0.4s; }
+
+.container {
+  max-width: 480px;
+  margin: auto;
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.1);
+  transition: background 0.4s, color 0.4s;
+}
+
+h1, h2, h3 { text-align: center; margin-bottom: 10px; }
+
+/* -----------------------------
+   Marquee / scrolling banner
+------------------------------ */
+.marquee {
+  background: #f59e0b;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: 8px;
+  padding: 8px 0;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll 15s linear infinite;
+}
+
+.marquee:hover .marquee-content { animation-play-state: paused; }
+
+.marquee-content span {
+  display: inline-block;
+  padding-right: 50px;
+  font-weight: bold;
+}
+
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+body.dark .marquee { background: #d97706; color: #fff; }
+
+/* Faster scroll on smaller screens */
+@media screen and (max-width: 480px) { .marquee-content { animation-duration: 10s; } }
+@media screen and (max-width: 360px) { .marquee-content { animation-duration: 8s; } }
+
+/* -----------------------------
+   TOP BUTTONS
+------------------------------ */
+.top-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.top-buttons button {
+  flex: 1 1 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 50px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.top-buttons button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.top-buttons .icon { font-size: 18px; }
+.top-buttons .label { font-weight: 600; }
+
+#themeToggle { background: #111827; color: white; }
+#toggleBalance { background: #6b7280; color: white; }
+
+body.dark #themeToggle { background: #f8fafc; color: #111827; }
+body.dark #toggleBalance { background: #334155; color: #f8fafc; }
+
+/* -----------------------------
+   BALANCE & SUMMARY
+------------------------------ */
+.balance h3 { font-size: 28px; }
+.summary { display: flex; gap: 10px; margin-bottom: 16px; }
+.income, .expense { flex: 1; padding: 12px; border-radius: 10px; text-align: center; font-weight: bold; }
+.income { background: #e6f7ef; color: #16a34a; }
+.expense { background: #fee2e2; color: #dc2626; }
+
+/* -----------------------------
+   FORM & FILTER
+------------------------------ */
+ul { list-style: none; padding: 0; }
+li { background: #f9fafb; padding: 12px; margin-bottom: 8px; border-left: 5px solid; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; transition: background 0.3s; }
+li.plus { border-color: #16a34a; }
+li.minus { border-color: #dc2626; }
+.delete-btn { background: transparent; color: #dc2626; font-size: 18px; border: none; }
+input, select, button { width: 100%; padding: 12px; margin-top: 8px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; transition: background 0.4s, color 0.4s, border-color 0.3s; }
+
+/* -----------------------------
+   Overspending Alert
+------------------------------ */
+.alert {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.alert.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce { 0% { transform: translateY(-20px); } 50% { transform: translateY(5px); } 100% { transform: translateY(0); } }
+
+body.dark .alert { background: #450a0a; color: #fecaca; box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
+
+/* -----------------------------
+   Canvas charts
+------------------------------ */
+canvas { margin-top: 16px; }
+
+/* -----------------------------
+   Responsive for small screens
+------------------------------ */
+@media screen and (max-width: 360px) { .top-buttons button { flex: 1 1 100%; font-size: 14px; } }
