@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spend Smart</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+<!-- Seamless scrolling marquee -->
+<div class="marquee">
+  <div class="marquee-content">
+    <span>Flowdiary 50% discount December 2025&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>Flowdiary 50% discount December 2025&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<div class="container">
+  <h1>Budget Tracker</h1>
+
+  <!-- Top buttons with icon + label -->
+  <div class="top-buttons">
+    <button id="themeToggle" title="Toggle Dark Mode">
+      <span class="icon">🌙</span>
+      <span class="label">Dark Mode</span>
+    </button>
+    <button id="toggleBalance" title="Hide/Show Balance">
+      <span class="icon">👁️</span>
+      <span class="label">Hide Balance</span>
+    </button>
+  </div>
+
+  <div class="balance">
+    <h2>Your Balance</h2>
+    <h3 id="balance">₦0.00</h3>
+  </div>
+
+  <div id="alertBox" class="alert hidden">
+    ⚠️ You are overspending this month!
+  </div>
+
+  <div class="summary">
+    <div class="income">
+      <h4>Income</h4>
+      <p id="income">₦0.00</p>
+    </div>
+    <div class="expense">
+      <h4>Expense</h4>
+      <p id="expense">₦0.00</p>
+    </div>
+  </div>
+
+  <label><strong>Filter by Month</strong></label>
+  <input type="month" id="monthFilter"/>
+
+  <form id="transaction-form">
+    <input type="text" id="text" placeholder="Description" required />
+    <select id="type">
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+    </select>
+    <input type="number" id="amount" placeholder="Amount" required />
+    <select id="category">
+      <option>Food</option>
+      <option>Transport</option>
+      <option>Rent</option>
+      <option>Utilities</option>
+      <option>Entertainment</option>
+      <option>Other</option>
+    </select>
+    <button>Add Transaction</button>
+  </form>
+
+  <h3>History</h3>
+  <ul id="transaction-list"></ul>
+
+  <h3>Expenses by Category</h3>
+  <canvas id="expenseChart"></canvas>
+
+  <h3>Income vs Expense</h3>
+  <canvas id="barChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
