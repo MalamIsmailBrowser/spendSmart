@@ -1,5 +1,6 @@
  // DOM Elements
 const balance = document.getElementById("balance");
+const dark = document.querySelector(".dark");
 const incomeEl = document.getElementById("income");
 const expenseEl = document.getElementById("expense");
 const form = document.getElementById("transaction-form");
@@ -82,6 +83,8 @@ function updateValues(data) {
 }
 
 // Update charts
+
+/*
 function updateCharts(data) {
   const catData = {};
   data.forEach(t=>{ if(t.amount<0){ catData[t.category]=(catData[t.category]||0)+Math.abs(t.amount); } });
@@ -91,6 +94,7 @@ function updateCharts(data) {
     data:{labels:Object.keys(catData),datasets:[{data:Object.values(catData),backgroundColor:["#e74c3c","#3498db","#2ecc71","#f1c40f","#9b59b6","#95a5a6"]}]}
   });
 
+
   const income = data.filter(t=>t.amount>0).reduce((a,b)=>a+b.amount,0);
   const expense = data.filter(t=>t.amount<0).reduce((a,b)=>a+Math.abs(b.amount),0);
   if(barChart) barChart.destroy();
@@ -98,7 +102,81 @@ function updateCharts(data) {
     type:"bar",
     data:{labels:["Income","Expense"],datasets:[{data:[income,expense],backgroundColor:["#2ecc71","#e74c3c"]}]}
   });
+} 
+*/
+
+  function updateCharts(data) {
+  const isDark = document.body.classList.contains("dark");
+
+  const textColor = isDark ? "#e5e7eb" : "#111827";
+  const gridColor = isDark ? "#111827" : "#e5e7eb";
+
+  // ---------- Expense Pie Chart ----------
+  const catData = {};
+  data.forEach(t => {
+    if (t.amount < 0) {
+      catData[t.category] =
+        (catData[t.category] || 0) + Math.abs(t.amount);
+    }
+  });
+
+  if (expenseChart) expenseChart.destroy();
+  expenseChart = new Chart(chartCanvas, {
+    type: "pie",
+    data: {
+      labels: Object.keys(catData),
+      datasets: [{
+        data: Object.values(catData),
+        backgroundColor: [
+          "#ef4444", "#3b82f6", "#22c55e",
+          "#eab308", "#a855f7", "#94a3b8"
+        ]
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: { color: textColor }
+        }
+      }
+    }
+  });
+
+
+  // ---------- Income vs Expense Bar Chart ----------
+  const income = data.filter(t => t.amount > 0).reduce((a, b) => a + b.amount, 0);
+  const expense = data.filter(t => t.amount < 0).reduce((a, b) => a + Math.abs(b.amount), 0);
+
+  if (barChart) barChart.destroy();
+  barChart = new Chart(barChartCanvas, {
+    type: "bar",
+    data: {
+      labels: ["Income", "Expense"],
+      datasets: [{
+        data: [income, expense],
+        backgroundColor: ["#22c55e", "#ef4444"]
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          ticks: { color: textColor },
+          grid: { color: gridColor }
+        },
+        y: {
+          ticks: { color: textColor },
+          grid: { color: gridColor }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
 }
+
+
+
 
 // Overspending alert
 function checkOverspending(data){
@@ -125,6 +203,8 @@ function applyBalanceVisibility(){
 }
 
 // Dark mode
+
+/*
 themeToggle.onclick=()=>{
   document.body.classList.toggle("dark");
   localStorage.setItem("theme",
@@ -132,8 +212,29 @@ themeToggle.onclick=()=>{
 };
 if(localStorage.getItem("theme")==="dark") document.body.classList.add("dark");
 
+*/
+
+
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
+
+// Toggle theme on click
+themeToggle.onclick = () => {
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+};
+
+
+
 // Month filter
 monthFilter.addEventListener("change",init);
+
 
 // Initialize
 init();
